@@ -111,7 +111,7 @@ Flags to run `etcd-benchmark-cleaner`:
 
 ## 🔐 TLS Support
 
-If your etcd cluster uses TLS or mTLS, provide the following flags:
+If your etcd cluster uses TLS, provide the following flags:
 
 ```bash
 --cacert path/to/ca.crt
