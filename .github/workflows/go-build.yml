@@ -5,10 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [ main ]
     tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -33,7 +30,7 @@ jobs:
       - name: Build binary
         run: go build -v -o etcd-benchmark-cleaner ./clean.go
 
-      - name: Run tests (if you have them)
+      - name: Run tests
         run: |
           if [ -d "tests" ] || ls *_test.go >/dev/null 2>&1; then
             go test ./...
