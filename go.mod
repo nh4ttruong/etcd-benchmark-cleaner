@@ -1,4 +1,4 @@
-module nh4ttruong/etcd-benchmark-cleaner
+module github.com/nh4ttruong/etcd-benchmark-cleaner
 
 go 1.23.0
 
