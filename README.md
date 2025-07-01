@@ -18,18 +18,20 @@ A lightweight CLI tool to **scan**, **detect**, and optionally **remove benchmar
 
 ## 🔧 Installation
 
-Clone and build the project locally:
+Install package:
+
+```bash
+go install github.com/nh4ttruong/etcd-benchmark-cleaner@latest
+export PATH=${PATH}:`go env GOPATH`/bin && which etcd-benchmark-cleaner
+```
+
+Or manual build locally:
 
 ```bash
 git clone https://github.com/nh4ttruong/etcd-benchmark-cleaner.git
 cd etcd-benchmark-cleaner
 go build -o etcd-benchmark-cleaner
-```
-
-Or run directly:
-
-```bash
-go run clean.go [flags]
+# Or run directly with `go run clean.go [flags]`
 ```
 
 ---
