@@ -2,7 +2,9 @@
 
 A lightweight CLI tool to **scan**, **detect**, and optionally **remove benchmark or non-UTF8 keys** from your etcd key-value store.
 
-> ⚠️ Note: This utility was built as an extension because the official [`etcd benchmark tool`](https://github.com/etcd-io/etcd/blob/main/tools/benchmark/README.md) does **not include any built-in `clean` command** or ability to manage invalid/benchmark keys directly.
+This tool was created as an extension because the official [etcd/tools/benchmark](https://github.com/etcd-io/etcd/blob/main/tools/benchmark/README.md) does **not include a** built-in `clean` command or the ability to directly manage invalid or benchmark keys. By default, the `etcd benchmark` tool creates a large binary keyspace for testing etcd. Therefore, `etcd-benchmark-cleaner` helps retrieve and remove unnecessary binary keys in `etcd`, reducing its size.
+
+> Be cautious and do not run the tool if you are not sure what it does.
 
 ---
 
@@ -75,6 +77,7 @@ Flags to run `etcd-benchmark-cleaner`:
 | `--remove`    | _N/A_             | Actually delete benchmark keys (caution)                        |
 | `--timeout`   | 5s                | Request timeout (default: `5s`)                                 |
 
+---
 
 ## Examples
 
@@ -128,6 +131,29 @@ export ETCDCTL_CACERT=...
 export ETCDCTL_CERT=...
 export ETCDCTL_KEY=...
 ```
+## Best Practice
+
+After running `etcd-benchmark-cleaner`, you should obtain the safe revision of the etcd state, then compact at that revision and defrag each etcd node.
+
+> Please check the further information about `compact` and `defrag` at [ETCD | Maintenance guide](https://etcd.io/docs/v3.6/op-guide/maintenance/)
+
+```bash
+# Get safe revision
+etcdctl endpoint status --write-out=json | jq '[.[] | .Status.header.revision]'
+
+# Compact using the previous safe revision. Perform this on one of the three etcd nodes.
+etcdctl --endpoints="$ETCD_NODE_1" compact <safe_revison_id>
+
+# Defrag nodes in the following order
+etcdctl --endpoints="$ETCD_NODE_1" defrag && sleep 10
+etcdctl --endpoints="$ETCD_NODE_2" defrag && sleep 10
+etcdctl --endpoints="$ETCD_NODE_3" defrag
+
+# Watch change in etcd DB size
+etcdctl endpoint status --write-out=json
+```
+
+---
 
 ## Note
 
