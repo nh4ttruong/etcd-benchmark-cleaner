@@ -89,7 +89,7 @@ Flags to run `etcd-benchmark-cleaner`:
 
 ![Run](image/run.png)
 
-### can keys with a benchmark prefix (`0x00`)
+### Scan keys with a benchmark prefix (`0x00`)
 
 ```bash
 ./etcd-benchmark-cleaner --endpoints=https://127.0.0.1:2379 --prefix 00
@@ -104,7 +104,7 @@ Flags to run `etcd-benchmark-cleaner`:
 
 ![Dry run](image/dryrun.png)
 
-### Actually delete benchmark keys (irreversible)
+### Remove benchmark keys (irreversible)
 
 ```bash
 ./etcd-benchmark-cleaner --endpoints=https://127.0.0.1:2379 --remove
